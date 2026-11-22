@@ -79,10 +79,17 @@ body{font-family:var(--ja);color:var(--ink);background:var(--paper);-webkit-font
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 
 /* ---------- メニュー ---------- */
-nav.glass{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 20px);z-index:50;border-radius:999px;display:flex;align-items:center;gap:2px;padding:6px 6px 6px 18px;
+nav.glass{position:fixed;top:16px;right:clamp(12px,2.4vw,32px);width:max-content;max-width:calc(100vw - 24px);z-index:50;border-radius:999px;display:flex;align-items:center;gap:2px;padding:6px;
   background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.14) 50%,rgba(255,255,255,.3))!important;
   -webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.06)!important;backdrop-filter:blur(12px) saturate(200%) brightness(1.06)!important}
-nav .logo{width:26px;margin-right:10px;flex:none}
+/* 左上のロゴ（スクロールしてもついてくる） */
+.brand{position:fixed;top:16px;left:clamp(12px,2.4vw,32px);z-index:50;display:flex;align-items:center;height:52px;padding:0 20px;border-radius:999px;text-decoration:none;
+  border:1px solid transparent;transition:background .5s,box-shadow .5s,border-color .5s,-webkit-backdrop-filter .5s,backdrop-filter .5s}
+.brand .logo{width:clamp(120px,12vw,150px)}
+.brand.scrolled{background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.14) 50%,rgba(255,255,255,.3));
+  -webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.06);backdrop-filter:blur(12px) saturate(200%) brightness(1.06);
+  border-color:rgba(255,255,255,.7);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),0 1px 2px rgba(20,40,40,.06),0 18px 50px -12px rgba(20,50,50,.16)}
+.menu-btn{display:none}
 nav .links{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 nav .links::-webkit-scrollbar{display:none}
 nav a{position:relative;z-index:1;color:var(--gray-800);text-decoration:none;font-family:var(--en);font-size:13px;font-weight:500;letter-spacing:.01em;padding:10px 15px;border-radius:999px;white-space:nowrap;transition:color .3s}
@@ -92,8 +99,19 @@ nav .pip{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:999px;z-i
   box-shadow:inset 0 1px 0 #fff,0 2px 8px rgba(20,50,50,.12);transition:transform .5s cubic-bezier(.3,1.3,.5,1),width .5s cubic-bezier(.3,1.3,.5,1),opacity .3s}
 nav a.cta{background:var(--ink);color:#fff;font-weight:600;margin-left:4px;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
 nav a.cta:hover{background:var(--teal-dark)}
-@media(max-width:560px){nav.glass{padding-left:14px}nav a{padding:10px 10px;font-size:12px}}
-@media(max-width:440px){nav .links a[href="#theme"]{display:none}}
+/* スマホ：メニューは「Menu」ボタンから開く */
+@media(max-width:820px){
+  .brand{padding:0 16px;height:48px}
+  .brand .logo{width:118px}
+  nav.glass{flex-wrap:wrap;justify-content:flex-end;border-radius:26px;padding:5px}
+  .menu-btn{display:block;order:1;border:0;background:transparent;font:600 13px var(--en);color:var(--ink);padding:11px 14px;border-radius:999px;cursor:pointer}
+  nav a.cta{order:2}
+  nav .links{order:3;display:none;flex-direction:column;width:100%;padding:6px 4px 4px;gap:0}
+  nav.open .links{display:flex}
+  nav .links a{padding:13px 16px;font-size:15px;border-radius:16px}
+  nav .pip{display:none}
+  nav.open{border-radius:26px;width:min(300px,calc(100vw - 24px))}
+}
 
 /* ---------- ファーストビュー ---------- */
 .hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:120px 24px 140px;position:relative}
@@ -204,9 +222,11 @@ footer .logo .g{background:var(--teal)}
 <body>
 <div class="wash" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="d"></span><span class="e"></span></div>
 
+<a class="brand" href="#top" aria-label="HARUIRO トップへ"><span class="logo full" role="img" aria-label="HARUIRO"><i class="g"></i><i class="d"></i></span></a>
+
 <nav class="glass" aria-label="メニュー">
-  <span class="logo mark" aria-label="HARUIRO"><i class="g"></i><i class="d"></i></span>
-  <div class="links"><span class="pip" aria-hidden="true"></span><a href="#mission">Mission</a><a href="#theme">Theme</a><a href="#business">Business</a><a href="#company">Company</a></div><a href="#contact" class="cta">Contact</a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
+  <div class="links" id="navlinks"><span class="pip" aria-hidden="true"></span><a href="#mission">Mission</a><a href="#theme">Theme</a><a href="#business">Business</a><a href="#company">Company</a></div><a href="#contact" class="cta">Contact</a>
 </nav>
 
 <header class="hero" id="top">
@@ -369,6 +389,17 @@ footer .logo .g{background:var(--teal)}
     pip.style.opacity = 1; pip.style.width = a.offsetWidth+'px'; pip.style.transform = `translateX(${a.offsetLeft}px)`;
   };
   addEventListener('scroll', movePip, {passive:true}); addEventListener('resize', movePip); movePip();
+
+  // 左上のロゴ：スクロールしたらガラスの台を出して読みやすく
+  const brand = document.querySelector('.brand');
+  const onBrand = () => brand.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onBrand, {passive:true}); onBrand();
+
+  // スマホのメニュー開閉
+  const nav = document.querySelector('nav');
+  const mbtn = document.querySelector('.menu-btn');
+  mbtn.addEventListener('click', () => { const o = nav.classList.toggle('open'); mbtn.setAttribute('aria-expanded', o); mbtn.textContent = o ? 'Close' : 'Menu'; });
+  navLinks.forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); mbtn.setAttribute('aria-expanded', false); mbtn.textContent = 'Menu'; }));
 
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;

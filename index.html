@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>株式会社ハルイロ｜HARUIRO inc.</title>
-<meta name="description" content="株式会社ハルイロは、「関係性」を書き換え、世界をハルイロに再定義する会社です。日本の労働生産性の向上と人材ビジネスの再定義に取り組みます。">
+<meta name="description" content="株式会社ハルイロは、「関係性」を書き換え、世界をハルイロに再定義する会社です。日本の労働生産性を高め、人材ビジネスのあり方を変えていきます。">
 <!-- 確認期間中は検索に出さない。独自ドメイン公開時に削除 -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#f4f5f5">
@@ -80,13 +80,19 @@ body{font-family:var(--ja);color:var(--ink);background:var(--paper);-webkit-font
 
 /* ---------- メニュー ---------- */
 nav.glass{position:fixed;top:16px;right:clamp(12px,2.4vw,32px);width:max-content;max-width:calc(100vw - 24px);z-index:50;border-radius:999px;display:flex;align-items:center;gap:2px;padding:6px;
-  background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.14) 50%,rgba(255,255,255,.3))!important;
-  -webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.06)!important;backdrop-filter:blur(12px) saturate(200%) brightness(1.06)!important}
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,0) 48%),
+    linear-gradient(160deg,rgba(214,240,239,.7) 0%,rgba(170,222,219,.42) 52%,rgba(232,246,245,.66) 100%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(220%) brightness(1.06)!important;backdrop-filter:blur(14px) saturate(220%) brightness(1.06)!important;
+  border-color:rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 1.5px 1px #fff,inset 0 -2px 6px rgba(43,135,131,.14),inset 0 0 0 1px rgba(255,255,255,.35),0 1px 2px rgba(20,40,40,.08),0 18px 44px -14px rgba(20,60,60,.28)!important}
 /* 左上のロゴ（スクロールしてもついてくる） */
 .brand{position:fixed;top:16px;left:clamp(12px,2.4vw,32px);z-index:50;display:flex;align-items:center;height:52px;padding:0 20px;border-radius:999px;text-decoration:none;
   border:1px solid transparent;transition:background .5s,box-shadow .5s,border-color .5s,-webkit-backdrop-filter .5s,backdrop-filter .5s}
-.brand .logo{width:clamp(120px,12vw,150px)}
-.brand.scrolled{background:linear-gradient(160deg,rgba(255,255,255,.42),rgba(255,255,255,.14) 50%,rgba(255,255,255,.3));
+.brand .logo{width:clamp(120px,12vw,150px);transition:transform .4s cubic-bezier(.3,1.4,.5,1)}
+.brand:hover .logo{transform:scale(1.04)}
+.brand:hover{box-shadow:0 0 0 5px rgba(85,190,186,.14),0 0 26px rgba(85,190,186,.3)}
+.brand.scrolled{background:linear-gradient(180deg,rgba(255,255,255,.85) 0%,rgba(255,255,255,0) 48%),linear-gradient(160deg,rgba(214,240,239,.7) 0%,rgba(170,222,219,.42) 52%,rgba(232,246,245,.66) 100%);
   -webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.06);backdrop-filter:blur(12px) saturate(200%) brightness(1.06);
   border-color:rgba(255,255,255,.7);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),0 1px 2px rgba(20,40,40,.06),0 18px 50px -12px rgba(20,50,50,.16)}
 .menu-btn{display:none}
@@ -94,11 +100,19 @@ nav .links{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-widt
 nav .links::-webkit-scrollbar{display:none}
 nav a{position:relative;z-index:1;color:var(--gray-800);text-decoration:none;font-family:var(--en);font-size:13px;font-weight:500;letter-spacing:.01em;padding:10px 15px;border-radius:999px;white-space:nowrap;transition:color .3s}
 nav a.active{color:var(--ink)}
+/* カーソルを合わせると、ふんわりティールに光る */
+nav .links a::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;opacity:0;transform:scale(.85);
+  background:radial-gradient(120% 140% at 50% 0%,rgba(255,255,255,.95),rgba(85,190,186,.35) 70%,rgba(85,190,186,.12));
+  box-shadow:0 0 18px rgba(85,190,186,.45),inset 0 1px 0 #fff;transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.4,.5,1)}
+nav .links a:hover::before,nav .links a:focus-visible::before{opacity:1;transform:scale(1)}
+nav .links a:hover{color:var(--teal-dark)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
 nav .pip{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:999px;z-index:0;opacity:0;
   background:linear-gradient(160deg,rgba(255,255,255,.95),rgba(255,255,255,.55));
   box-shadow:inset 0 1px 0 #fff,0 2px 8px rgba(20,50,50,.12);transition:transform .5s cubic-bezier(.3,1.3,.5,1),width .5s cubic-bezier(.3,1.3,.5,1),opacity .3s}
 nav a.cta{background:var(--ink);color:#fff;font-weight:600;margin-left:4px;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
-nav a.cta:hover{background:var(--teal-dark)}
+nav a.cta{transition:background .35s,box-shadow .35s,transform .35s}
+nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186,.22),0 6px 18px rgba(43,135,131,.35);transform:translateY(-1px)}
 /* スマホ：メニューは「Menu」ボタンから開く */
 @media(max-width:820px){
   .brand{padding:0 16px;height:48px}
@@ -164,7 +178,7 @@ h2{font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.4;letter-spacing
 
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:56px}
 .card{border-radius:30px;padding:40px 36px;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.card:hover{transform:translateY(-4px) scale(1.01)}
+.card:hover{transform:translateY(-4px) scale(1.01);box-shadow:inset 0 1.5px 1px #fff,0 0 0 1px rgba(85,190,186,.35),0 0 36px rgba(85,190,186,.25),0 22px 50px -14px rgba(20,60,60,.22)}
 .card .no{font-family:'Manrope',var(--en);font-weight:300;font-size:52px;line-height:1;color:var(--teal);letter-spacing:0}
 .card h3{font-size:22px;font-weight:700;margin:22px 0 14px;line-height:1.6}
 .card p{color:var(--gray-600);font-size:14px;line-height:2.1}
@@ -198,7 +212,10 @@ h2{font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.4;letter-spacing
 .contact{text-align:center}
 .contact .lead{margin:0 auto}
 .pill{display:inline-flex;align-items:center;gap:14px;margin-top:40px;padding:18px 22px 18px 36px;border-radius:999px;color:var(--ink);text-decoration:none;font-size:16px;font-weight:500;letter-spacing:.08em;transition:transform .4s}
-.pill:hover{transform:translateY(-3px)}
+.pill{transition:transform .4s,box-shadow .4s}
+.pill:hover{transform:translateY(-3px);box-shadow:0 0 0 6px rgba(85,190,186,.16),0 0 34px rgba(85,190,186,.35),inset 0 1px 0 #fff}
+.pill .arrow{transition:transform .4s cubic-bezier(.3,1.4,.5,1)}
+.pill:hover .arrow{transform:translateX(4px)}
 .pill .arrow{width:36px;height:36px;border-radius:50%;background:var(--teal);display:grid;place-items:center;color:#fff;font-size:15px}
 
 footer{padding:60px clamp(24px,6vw,80px) 40px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;color:var(--gray-600);font-size:12px}
@@ -259,7 +276,7 @@ footer .logo .g{background:var(--teal)}
       </div>
       <div class="reveal">
         <p>それまで見過ごされていたことや、止まっていた現状に、私たちの視点が加わる。そのとき、物事は新しい色を帯びはじめます。</p>
-        <p>「ハルイロ」とは、私たちが関わることで生まれる、未来への新しい色のこと。関わるすべてのビジネスと人生に、明るい再定義をもたらします。</p>
+        <p>「ハルイロ」とは、私たちが関わることで生まれる、未来への新しい色のこと。関わるすべてのビジネスと人生に、明るい変化をもたらします。</p>
       </div>
     </div>
   </section>
@@ -267,14 +284,14 @@ footer .logo .g{background:var(--teal)}
   <section class="block" id="theme">
     <div class="reveal">
       <div class="label">THEME</div>
-      <h2>日本の<wbr>労働生産性の<wbr>向上と、<br>人材ビジネスの<wbr>再定義。</h2>
+      <h2>日本の<wbr>労働生産性を高め、<br>人材ビジネスの<wbr>あり方を<wbr>変えていく。</h2>
       <p class="lead">人材ビジネスは、日本の労働生産性という大きな課題を解く鍵になれる。私たちはそう考えています。</p>
     </div>
     <div class="cards">
       <article class="card glass reveal">
         <div class="no">01</div>
         <h3>人材ビジネスの<wbr>仕組みを、<br>もっと透明に。</h3>
-        <p>日本の転職市場は、転職する人から見えにくい仕組みのままです。企業の情報が正しく届かず、ミスマッチが起き、成長する産業へ人が動きにくくなっています。人材ビジネスのあり方そのものを、再定義します。</p>
+        <p>日本の転職市場は、転職する人から見えにくい仕組みのままです。企業の情報が正しく届かず、ミスマッチが起き、成長する産業へ人が動きにくくなっています。転職する人が、自分に合う会社を正しく選べる仕組みをつくります。</p>
       </article>
       <article class="card glass reveal">
         <div class="no">02</div>

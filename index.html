@@ -105,14 +105,14 @@ nav.glass{position:fixed;top:16px;right:clamp(12px,2.4vw,32px);width:max-content
   -webkit-backdrop-filter:blur(12px) saturate(200%) brightness(1.06);backdrop-filter:blur(12px) saturate(200%) brightness(1.06);
   border-color:rgba(255,255,255,.7);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.95),0 1px 2px rgba(20,40,40,.06),0 18px 50px -12px rgba(20,50,50,.16)}
 .menu-btn{display:none}
-nav .links{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav .links{position:relative;display:flex;gap:2px;overflow:visible}
 nav .links::-webkit-scrollbar{display:none}
 nav a{position:relative;z-index:1;color:var(--gray-800);text-decoration:none;font-family:var(--en);font-size:13px;font-weight:500;letter-spacing:.01em;padding:10px 15px;border-radius:999px;white-space:nowrap;transition:color .3s}
 nav a.active{color:var(--ink)}
 /* カーソルを合わせると、ふんわりティールに光る */
 nav .links a::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;opacity:0;transform:scale(.85);
   background:radial-gradient(120% 140% at 50% 0%,rgba(255,255,255,.95),rgba(85,190,186,.35) 70%,rgba(85,190,186,.12));
-  box-shadow:0 0 18px rgba(85,190,186,.45),inset 0 1px 0 #fff;transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.4,.5,1)}
+  box-shadow:inset 0 1px 0 #fff,inset 0 0 10px rgba(85,190,186,.28),0 0 0 1px rgba(85,190,186,.22),0 0 10px 1px rgba(85,190,186,.32);transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.4,.5,1)}
 nav .links a:hover::before,nav .links a:focus-visible::before{opacity:1;transform:scale(1)}
 nav .links a:hover{color:var(--teal-dark)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px}

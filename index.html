@@ -157,6 +157,16 @@ nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186
 .hero.ready .fade.d1{transition-delay:.25s}.hero.ready .fade.d2{transition-delay:.5s}.hero.ready .fade.d3{transition-delay:.8s}
 .hero .logo.mark .g{transition:background 2.4s ease 1.2s}
 .hero.ready .logo.mark .g{background:var(--teal)}
+/* ---------- 最初の演出：ロゴがドンと出て、ふっと本編へ（タブで初回のみ・約2秒） ---------- */
+.intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--paper);cursor:pointer;
+  animation:introOut .6s cubic-bezier(.4,0,.2,1) 1.4s forwards}
+.intro .logo.full{width:min(560px,72vw);opacity:0;transform:scale(1.14);filter:blur(14px);
+  animation:introIn .65s cubic-bezier(.16,1,.3,1) .1s forwards}
+.intro .logo .g{animation:introTint .6s ease .65s forwards}
+.intro.skip,.intro.skip .logo.full,.intro.skip .logo .g{animation-delay:0s}
+@keyframes introIn{to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes introTint{to{background:var(--teal)}}
+@keyframes introOut{to{opacity:0;visibility:hidden;pointer-events:none}}
 .scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);width:1px;height:56px;background:linear-gradient(var(--gray-300),transparent)}
 
 /* ---------- 由来（スクロールで色づく） ---------- */
@@ -283,6 +293,7 @@ footer .logo .g{background:var(--teal)}
 
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
+  .intro{display:none}
   .wash span{animation:none}
   .fade,.reveal{opacity:1;transform:none}
   .hero h1 .hl{animation:none;filter:none}
@@ -296,6 +307,14 @@ footer .logo .g{background:var(--teal)}
 </style>
 </head>
 <body>
+<div class="intro" aria-hidden="true"><span class="logo full"><i class="g"></i><i class="d"></i></span></div>
+<script>
+// オープニングはそのタブで最初の1回だけ。2回目以降（再読み込みなど）はすぐ本編へ
+try {
+  if (sessionStorage.getItem('haruiro-intro')) document.querySelector('.intro').remove();
+  else sessionStorage.setItem('haruiro-intro', '1');
+} catch (e) {}
+</script>
 <div class="wash" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="d"></span><span class="e"></span></div>
 
 <a class="brand" href="#top" aria-label="HARUIRO トップへ"><span class="logo full" role="img" aria-label="HARUIRO"><i class="g"></i><i class="d"></i></span></a>
@@ -435,7 +454,19 @@ footer .logo .g{background:var(--teal)}
   // グレー(#e2e5e5) → ティール(#55BEBA)
   const GRAY=[226,229,229], TEAL=[85,190,186];
 
-  requestAnimationFrame(()=>setTimeout(()=>hero.classList.add('ready'),120));
+  // 最初の演出（ロゴ）が消えはじめたら、本編の文字をふわっと出す。クリックやスクロールで飛ばせる
+  const intro = document.querySelector('.intro');
+  const introOn = intro && getComputedStyle(intro).display !== 'none';
+  let heroTimer;
+  const showHero = (ms) => { clearTimeout(heroTimer); heroTimer = setTimeout(()=>hero.classList.add('ready'), ms); };
+  if (introOn) {
+    showHero(1450);
+    const skip = () => { if (intro.classList.contains('skip')) return; intro.classList.add('skip'); showHero(250); };
+    ['click','wheel','touchstart','keydown'].forEach(ev => addEventListener(ev, skip, {once:true, passive:true}));
+    intro.addEventListener('animationend', e => { if (e.animationName === 'introOut') intro.remove(); });
+  } else {
+    requestAnimationFrame(()=>showHero(120));
+  }
 
   const onScroll = () => {
     // ページ全体の色づき

@@ -45,10 +45,10 @@ body{font-family:var(--ja);color:var(--ink);background:var(--paper);-webkit-font
 /* ---------- 背景：色のにじみ（スクロールで少しずつ濃くなる） ---------- */
 .wash{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .wash span{position:absolute;border-radius:50%;filter:blur(70px);background:var(--teal);will-change:transform,border-radius,opacity}
-.wash .a{width:50vmax;height:50vmax;left:-14vmax;top:-16vmax;opacity:calc(.26 + var(--c)*.12);animation:driftA 16s ease-in-out infinite,morph 9s ease-in-out infinite}
-.wash .b{width:42vmax;height:42vmax;right:-14vmax;top:22vh;opacity:calc(.2 + var(--c)*.14);animation:driftB 19s ease-in-out infinite,morph 11s ease-in-out infinite reverse}
-.wash .d{width:36vmax;height:36vmax;left:24vw;bottom:-20vmax;opacity:calc(.14 + var(--c)*.14);animation:driftC 14s ease-in-out infinite,morph 8s ease-in-out infinite}
-.wash .e{width:28vmax;height:28vmax;left:40vw;top:8vh;background:var(--teal-light);opacity:calc(.42 - var(--c)*.2);animation:driftD 12s ease-in-out infinite,breathe 6s ease-in-out infinite}
+.wash .a{width:50vmax;height:50vmax;left:-14vmax;top:-16vmax;opacity:calc(.3 + var(--c)*.12);animation:driftA 11s ease-in-out infinite,morph 6s ease-in-out infinite}
+.wash .b{width:42vmax;height:42vmax;right:-14vmax;top:22vh;opacity:calc(.24 + var(--c)*.14);animation:driftB 13s ease-in-out infinite,morph 8s ease-in-out infinite reverse}
+.wash .d{width:36vmax;height:36vmax;left:24vw;bottom:-20vmax;opacity:calc(.18 + var(--c)*.14);animation:driftC 10s ease-in-out infinite,morph 5.5s ease-in-out infinite}
+.wash .e{width:28vmax;height:28vmax;left:40vw;top:8vh;background:var(--teal-light);opacity:calc(.46 - var(--c)*.2);animation:driftD 8s ease-in-out infinite,breathe 4.5s ease-in-out infinite}
 /* ゆっくりだけど、見て分かる程度に「もわー」と漂い続ける動き */
 @keyframes driftA{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(16vw,8vh) scale(1.12)}50%{transform:translate(26vw,20vh) scale(.95)}75%{transform:translate(8vw,16vh) scale(1.08)}}
 @keyframes driftB{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(-18vw,-10vh) scale(1.15)}60%{transform:translate(-28vw,6vh) scale(.9)}80%{transform:translate(-10vw,10vh) scale(1.05)}}
@@ -160,8 +160,8 @@ nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186
 .scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);width:1px;height:56px;background:linear-gradient(var(--gray-300),transparent)}
 
 /* ---------- 由来（スクロールで色づく） ---------- */
-.story{height:300vh;position:relative}
-.stage{position:sticky;top:0;height:100svh;display:grid;place-items:center;overflow:hidden;padding:88px 20px 24px}
+.story{position:relative}
+.stage{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;padding:14vh 20px}
 .band{position:absolute;left:50%;top:50%;width:150vmax;height:clamp(90px,16vh,170px);border-radius:999px;transform:translate(-50%,-50%) rotate(-28deg) scaleX(var(--bx,.2));background:var(--band,#e2e5e5);transition:background .2s;opacity:.9}
 .panel{position:relative;max-width:820px;background:linear-gradient(160deg,rgba(255,255,255,.5),rgba(255,255,255,.16) 50%,rgba(255,255,255,.34))!important;width:100%;border-radius:40px;padding:clamp(36px,6vw,72px) clamp(24px,6vw,72px)}
 .panel p{font-size:clamp(17px,2vw,23px);line-height:2.1;color:var(--gray-300);transition:color .6s ease}
@@ -235,6 +235,47 @@ footer{padding:60px clamp(24px,6vw,80px) 40px;max-width:1200px;margin:0 auto;dis
 footer .logo{width:170px}
 footer .logo .g{background:var(--teal)}
 
+
+/* ---------- アイコン・イラスト（線画。ゆっくり描かれて、少しだけ動き続ける） ---------- */
+.ico{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.ico .ac{stroke:var(--teal)}
+.ico .acf{fill:var(--teal);stroke:none}
+.ico .soft{stroke:var(--gray-400)}
+.ico .dr{stroke-dasharray:100;stroke-dashoffset:100}
+.in .ico .dr{animation:draw 1.8s cubic-bezier(.4,0,.2,1) .2s both}
+.in .ico .dr.d2{animation-delay:.6s}.in .ico .dr.d3{animation-delay:1s}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35;transform:scale(.75)}50%{opacity:1;transform:scale(1.2)}}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.flow{stroke-dasharray:6 16;animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-44}}
+.bob{transform-box:fill-box;transform-origin:center;animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.chip{width:64px;height:64px;border-radius:22px;display:grid;place-items:center;flex:none}
+.chip .ico{width:34px;height:34px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.biz .card.now .ico{stroke:#fff}.biz .card.now .ico .ac{stroke:#d6f3f1}.biz .card.now .ico .acf{fill:#fff}
+.biz .card.now .chip{background:linear-gradient(160deg,rgba(255,255,255,.35),rgba(255,255,255,.12));border-color:rgba(255,255,255,.55)}
+.biz .card.soon .chip .ico{stroke:var(--gray-300)}.biz .card.soon .chip .ico .ac{stroke:var(--teal-light)}
+/* Mission のイラスト：光がプリズムを通って、色が生まれる */
+.prism{width:min(440px,100%);margin-top:36px}
+.prism .beam{stroke:var(--gray-300);stroke-width:3}
+.prism .beam-flow{stroke:#fff;stroke-width:3;opacity:.9}
+.prism .out1{stroke:var(--teal-light);stroke-width:3}.prism .out2{stroke:var(--teal);stroke-width:3}.prism .out3{stroke:var(--teal-dark);stroke-width:3}
+.prism .glassP{fill:url(#pg);stroke:#fff;stroke-width:1.5;filter:drop-shadow(0 14px 22px rgba(20,60,60,.16))}
+/* Recruit のイラスト：重なったところから色が生まれる */
+.venn{width:150px;height:110px;flex:none}
+.venn .mid{fill:var(--teal);opacity:.55;transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite}
+.recruit .rleft{display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.contact .chip{margin:0 auto 26px}
+.biz .chip{width:46px;height:46px;border-radius:16px}.biz .chip .ico{width:26px;height:26px}
+.biz .tag{white-space:nowrap}
+.pill{white-space:nowrap}
+@media(max-width:420px){.pill{padding:16px 18px 16px 26px;font-size:15px}}
+@media (prefers-reduced-motion:reduce){.pulse,.spin,.flow,.bob,.venn .mid{animation:none}.ico .dr,.in .ico .dr{animation:none;stroke-dashoffset:0}}
+
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
   .wash span{animation:none}
@@ -286,6 +327,16 @@ footer .logo .g{background:var(--teal)}
       <div class="reveal">
         <div class="label">MISSION</div>
         <h2>私たちが<wbr>関わることで<br>生まれる、<br>未来への<wbr>新しい色。</h2>
+        <svg class="prism ico" viewBox="0 0 440 230" role="img" aria-label="光がガラスを通って、色が生まれるイラスト">
+          <defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".55" stop-color="#e3f4f3" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity=".8"/></linearGradient></defs>
+          <path class="dr beam" pathLength="100" d="M0 150 L176 118"/>
+          <path class="beam-flow flow" d="M0 150 L176 118"/>
+          <path class="dr out1 d2" pathLength="100" d="M236 112 L440 52"/>
+          <path class="dr out2 d2" pathLength="100" d="M236 116 L440 116"/>
+          <path class="dr out3 d2" pathLength="100" d="M236 120 L440 180"/>
+          <path class="flow" style="stroke:#fff;stroke-width:2;opacity:.8" d="M236 116 L440 116"/>
+          <g class="bob"><path class="glassP" d="M205 30 L268 186 L142 186 Z"/><path d="M205 46 L178 112" style="stroke:#fff;stroke-width:3;opacity:.9"/></g>
+        </svg>
       </div>
       <div class="reveal">
         <p>それまで見過ごされていたことや、止まっていた現状に、私たちの視点が加わる。そのとき、物事は新しい色を帯びはじめます。</p>
@@ -302,12 +353,12 @@ footer .logo .g{background:var(--teal)}
     </div>
     <div class="cards">
       <article class="card glass reveal">
-        <div class="no">01</div>
+        <div class="card-head"><div class="no">01</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><rect pathLength="100" class="dr" x="3" y="5" width="20" height="16" rx="3"/><path pathLength="100" class="dr soft d2" d="M7 10h12M7 14h8"/><circle pathLength="100" class="dr ac d3" cx="22" cy="21" r="6"/><path pathLength="100" class="dr ac d3" d="M26.5 25.5L31 30"/><circle class="acf pulse" cx="22" cy="21" r="1.6"/></svg></span></div>
         <h3>人材ビジネスの<wbr>仕組みを、<br>もっと透明に。</h3>
         <p>日本の転職市場は、転職する人から見えにくい仕組みのままです。企業の情報が正しく届かず、ミスマッチが起き、成長する産業へ人が動きにくくなっています。転職する人が、自分に合う会社を正しく選べる仕組みをつくります。</p>
       </article>
       <article class="card glass reveal">
-        <div class="no">02</div>
+        <div class="card-head"><div class="no">02</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><path pathLength="100" class="dr" d="M3 29c6 0 6-8 12-8s5-9 11-9"/><path pathLength="100" class="dr ac d2" d="M26 12V3l5 3-5 3"/><circle class="acf pulse" cx="3.5" cy="29" r="1.8"/><circle class="soft" cx="15" cy="21" r="1.2" style="fill:var(--gray-400);stroke:none"/></svg></span></div>
         <h3>キャリアを、<wbr>長い目で<br>選べる社会へ。</h3>
         <p>人生100年時代、キャリアは長い目で考えるものになりました。一方で、終身雇用や上下関係などの古い制度や文化が、まだ根強く残っています。時代に合ったキャリア教育を広げていきます。</p>
       </article>
@@ -322,23 +373,23 @@ footer .logo .g{background:var(--teal)}
     </div>
     <div class="biz">
       <article class="card glass now reveal">
-        <div class="tag">PROJECT 01</div>
-        <div class="no" style="margin-top:20px">01</div>
+        <div class="card-head"><div class="tag">PROJECT 01</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><circle pathLength="100" class="dr" cx="7" cy="11" r="3.2"/><path pathLength="100" class="dr" d="M2 22c0-3.5 2.2-6 5-6s5 2.5 5 6"/><rect pathLength="100" class="dr d2" x="22" y="8" width="9" height="15" rx="1.5"/><path pathLength="100" class="dr d2" d="M25 12h3M25 16h3"/><path class="ac flow" d="M11 26c4 4 9 4 13 0"/><circle class="acf pulse" cx="17.5" cy="29" r="1.6"/></svg></span></div>
+        <div class="no" style="margin-top:4px">01</div>
         <h3>人材紹介会社向け<br>コンサルティング</h3>
         <p>人材紹介会社の事業や組織づくりを支援し、転職する人と企業の関係を、より良いかたちへ書き換えます。</p>
       </article>
-      <article class="card glass soon reveal"><div class="tag">PROJECT 02</div><div class="no" style="margin-top:20px">02</div><div class="cs">Coming soon</div></article>
-      <article class="card glass soon reveal"><div class="tag">PROJECT 03</div><div class="no" style="margin-top:20px">03</div><div class="cs">Coming soon</div></article>
-      <article class="card glass soon reveal"><div class="tag">PROJECT 04</div><div class="no" style="margin-top:20px">04</div><div class="cs">Coming soon</div></article>
+      <article class="card glass soon reveal"><div class="card-head"><div class="tag">PROJECT 02</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><circle class="spin" cx="17" cy="17" r="12" style="stroke-dasharray:3 5"/><path class="ac pulse" d="M17 12v10M12 17h10"/></svg></span></div><div class="no" style="margin-top:4px">02</div><div class="cs">Coming soon</div></article>
+      <article class="card glass soon reveal"><div class="card-head"><div class="tag">PROJECT 03</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><circle class="spin" cx="17" cy="17" r="12" style="stroke-dasharray:3 5"/><path class="ac pulse" d="M17 12v10M12 17h10"/></svg></span></div><div class="no" style="margin-top:4px">03</div><div class="cs">Coming soon</div></article>
+      <article class="card glass soon reveal"><div class="card-head"><div class="tag">PROJECT 04</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><circle class="spin" cx="17" cy="17" r="12" style="stroke-dasharray:3 5"/><path class="ac pulse" d="M17 12v10M12 17h10"/></svg></span></div><div class="no" style="margin-top:4px">04</div><div class="cs">Coming soon</div></article>
     </div>
   </section>
 
   <section class="block" id="recruit">
     <div class="recruit glass reveal">
-      <div>
+      <div class="rleft"><svg class="venn ico" viewBox="0 0 150 110" aria-hidden="true"><circle pathLength="100" class="dr" cx="52" cy="44" r="32"/><circle pathLength="100" class="dr d2" cx="98" cy="44" r="32"/><circle pathLength="100" class="dr soft d3" cx="75" cy="78" r="28"/><path class="mid" d="M75 21.8 A32 32 0 0 1 75 66.2 A32 32 0 0 1 75 21.8 Z"/></svg><div>
         <div class="label">RECRUIT</div>
         <h2>一緒に働く仲間を<br>募集しています。</h2>
-      </div>
+      </div></div>
       <a class="pill glass js-mail" href="#contact" data-sub="採用について">採用について問い合わせる <span class="arrow">→</span></a>
     </div>
   </section>
@@ -361,6 +412,7 @@ footer .logo .g{background:var(--teal)}
 
   <section class="block contact" id="contact">
     <div class="reveal">
+<span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><rect pathLength="100" class="dr" x="3" y="8" width="28" height="19" rx="3"/><path pathLength="100" class="dr ac d2" d="M4 10l13 9 13-9"/><circle class="acf pulse" cx="29" cy="8" r="2.4"/></svg></span>
       <div class="label" style="justify-content:center">CONTACT</div>
       <h2>お問い合わせ</h2>
       <p class="lead">ご相談・ご質問は、お気軽にお問い合わせください。</p>
@@ -394,11 +446,10 @@ footer .logo .g{background:var(--teal)}
     const max = document.documentElement.scrollHeight - innerHeight;
     root.style.setProperty('--c', clamp(scrollY / Math.max(max,1)).toFixed(3));
     // 由来セクションの進み具合
+    // 画面を止めずに、ふつうにスクロールしながら1行ずつ色づく
+    lines.forEach(el => el.classList.toggle('on', el.getBoundingClientRect().top < innerHeight * 0.66));
     const r = story.getBoundingClientRect();
-    const total = story.offsetHeight - innerHeight;
-    const p = clamp(-r.top / Math.max(total,1));
-    lines.forEach((el,i)=>el.classList.toggle('on', p > i*0.22 + 0.04));
-    const t = clamp((p-0.05)/0.85);
+    const t = clamp((innerHeight * 0.85 - r.top) / (r.height * 0.9));
     band.style.setProperty('--bx', (0.2 + t*0.8).toFixed(3));
     band.style.setProperty('--band', `rgb(${mix(GRAY[0],TEAL[0],t)},${mix(GRAY[1],TEAL[1],t)},${mix(GRAY[2],TEAL[2],t)})`);
   };

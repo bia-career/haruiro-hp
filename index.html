@@ -164,7 +164,7 @@ nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186
 .stage{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;padding:14vh 20px}
 .band{position:absolute;left:50%;top:50%;width:150vmax;height:clamp(90px,16vh,170px);border-radius:999px;transform:translate(-50%,-50%) rotate(-28deg) scaleX(var(--bx,.2));background:var(--band,#e2e5e5);transition:background .2s;opacity:.9}
 .panel{position:relative;max-width:820px;background:linear-gradient(160deg,rgba(255,255,255,.5),rgba(255,255,255,.16) 50%,rgba(255,255,255,.34))!important;width:100%;border-radius:40px;padding:clamp(36px,6vw,72px) clamp(24px,6vw,72px)}
-.panel p{font-size:clamp(17px,2vw,23px);line-height:2.1;color:var(--gray-300);transition:color .6s ease}
+.panel p{word-break:keep-all;overflow-wrap:anywhere;font-size:clamp(17px,2vw,23px);line-height:2.1;color:var(--gray-300);transition:color .6s ease}
 .panel p+p{margin-top:1.1em}
 .panel p.on{color:var(--ink)}
 .panel p .t{transition:color .6s}
@@ -174,7 +174,7 @@ nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186
 .panel .copy.on em{color:var(--teal)}
 
 /* ---------- 後半 ---------- */
-section.block{padding:clamp(100px,13vw,170px) clamp(24px,6vw,80px);max-width:1200px;margin:0 auto}
+section.block{padding:clamp(88px,10vw,140px) clamp(24px,6vw,80px);max-width:1200px;margin:0 auto}
 .label{font-family:var(--en);font-size:17px;font-weight:600;letter-spacing:0;color:var(--teal-dark);display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .label::before{content:"";width:22px;height:3px;border-radius:3px;background:var(--teal);transform:skewX(-30deg)}
 h1,h2,h3{word-break:keep-all;overflow-wrap:anywhere}
@@ -198,14 +198,14 @@ h2{font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.4;letter-spacing
 
 .biz{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:18px;margin-top:56px}
 .biz .card{min-height:320px;display:flex;flex-direction:column;padding:34px 30px}
-.biz .tag{font-family:var(--en);font-size:11px;letter-spacing:.24em;color:var(--gray-600)}
+.biz .tag{font-family:var(--en);font-size:12px;letter-spacing:.22em;color:var(--gray-600)}
 .biz .card.now{background:linear-gradient(150deg,rgba(85,190,186,.95),rgba(43,135,131,.92));color:#fff;border-color:rgba(255,255,255,.5)}
 .biz .card.now .tag,.biz .card.now p{color:rgba(255,255,255,.88)}
 .biz .card.now .no{color:#fff}
 .biz .card.now p{margin-top:auto}
 .biz .card.soon{color:var(--gray-400);transition:background .8s,transform .6s}
 .biz .card.soon .no{color:var(--gray-200);transition:color .8s}
-.biz .card.soon .cs{margin-top:auto;font-family:var(--en);font-size:13px;letter-spacing:.2em}
+.biz .card.soon .cs{margin-top:auto;font-family:var(--en);font-size:13px;letter-spacing:.2em;color:var(--gray-600)}
 .biz .card.soon:hover,.biz .card.soon.tint{background:linear-gradient(150deg,rgba(85,190,186,.16),rgba(255,255,255,.5));transform:translateY(-4px)}
 .biz .card.soon:hover .no,.biz .card.soon.tint .no{color:var(--teal-light)}
 @media(max-width:960px){.biz{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -302,7 +302,7 @@ footer .logo .g{background:var(--teal)}
 
 <nav class="glass" aria-label="メニュー">
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
-  <div class="links" id="navlinks"><span class="pip" aria-hidden="true"></span><a href="#mission">Mission</a><a href="#theme">Theme</a><a href="#business">Business</a><a href="#company">Company</a></div><a href="#contact" class="cta">Contact</a>
+  <div class="links" id="navlinks"><span class="pip" aria-hidden="true"></span><a href="#mission">Mission</a><a href="#theme">Theme</a><a href="#business">Business</a><a href="#recruit">Recruit</a><a href="#company">Company</a></div><a href="#contact" class="cta">Contact</a>
 </nav>
 
 <header class="hero" id="top">
@@ -318,10 +318,10 @@ footer .logo .g{background:var(--teal)}
   <div class="stage">
     <div class="band" id="band" aria-hidden="true"></div>
     <div class="panel glass">
-      <p class="s">この世界に、決まりきった「色」はありません。</p>
-      <p class="s">光が何に当たり、どう映るか。<br>色は、その<span class="t">「関係性」</span>によって生まれるものです。</p>
-      <p class="s">私たちは、クライアントを取り巻く関係性を見つめ直し、<br>新しい光を当てていきます。</p>
-      <p class="s copy">「関係性」を書き換え、<br>世界を<em>ハルイロ</em>に再定義する。</p>
+      <p class="s">この世界に、<wbr>決まりきった<wbr>「色」は<wbr>ありません。</p>
+      <p class="s">光が何に当たり、<wbr>どう映るか。<br>色は、その<wbr><span class="t">「関係性」</span>によって<wbr>生まれるものです。</p>
+      <p class="s">私たちは、<wbr>クライアントを<wbr>取り巻く関係性を<wbr>見つめ直し、<br>新しい光を<wbr>当てていきます。</p>
+      <p class="s copy">「関係性」を書き換え、<br>世界を<em>ハルイロ</em>に<wbr>再定義する。</p>
     </div>
   </div>
 </section>
@@ -335,7 +335,7 @@ footer .logo .g{background:var(--teal)}
       </div>
       <div class="reveal">
         <p>それまで見過ごされていたことや、止まっていた現状に、私たちの視点が加わる。そのとき、物事は新しい色を帯びはじめます。</p>
-        <p>「ハルイロ」とは、私たちが関わることで生まれる、未来への新しい色のこと。関わるすべてのビジネスと人生に、明るい変化をもたらします。</p>
+        <p>「ハルイロ」という社名には、その想いを込めました。関わるすべてのビジネスと人生に、明るい変化をもたらします。</p>
       </div>
     </div>
   </section>
@@ -350,7 +350,7 @@ footer .logo .g{background:var(--teal)}
       <article class="card glass reveal">
         <div class="card-head"><div class="no">01</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><rect pathLength="100" class="dr" x="3" y="5" width="20" height="16" rx="3"/><path pathLength="100" class="dr soft d2" d="M7 10h12M7 14h8"/><circle pathLength="100" class="dr ac d3" cx="22" cy="21" r="6"/><path pathLength="100" class="dr ac d3" d="M26.5 25.5L31 30"/><circle class="acf pulse" cx="22" cy="21" r="1.6"/></svg></span></div>
         <h3>人材ビジネスの<wbr>仕組みを、<br>もっと透明に。</h3>
-        <p>日本の転職市場は、転職する人から見えにくい仕組みのままです。企業の情報が正しく届かず、ミスマッチが起き、成長する産業へ人が動きにくくなっています。転職する人が、自分に合う会社を正しく選べる仕組みをつくります。</p>
+        <p>日本の転職市場は、求職者から見えにくい仕組みのままです。企業の情報が正しく届かないためにミスマッチが起き、成長する産業へ人が移りにくくなっています。一人ひとりが、自分に合う会社を正しく選べる仕組みをつくります。</p>
       </article>
       <article class="card glass reveal">
         <div class="card-head"><div class="no">02</div><span class="chip glass"><svg class="ico" viewBox="0 0 34 34" aria-hidden="true"><path pathLength="100" class="dr" d="M3 29c6 0 6-8 12-8s5-9 11-9"/><path pathLength="100" class="dr ac d2" d="M26 12V3l5 3-5 3"/><circle class="acf pulse" cx="3.5" cy="29" r="1.8"/><circle class="soft" cx="15" cy="21" r="1.2" style="fill:var(--gray-400);stroke:none"/></svg></span></div>
@@ -384,6 +384,7 @@ footer .logo .g{background:var(--teal)}
       <div class="rleft"><div>
         <div class="label">RECRUIT</div>
         <h2>一緒に働く仲間を<br>募集しています。</h2>
+        <p class="lead" style="margin-top:14px;word-break:keep-all;overflow-wrap:anywhere">募集職種や働き方は、<wbr>お気軽に<wbr>お問い合わせください。</p>
       </div></div>
       <a class="pill glass js-mail" href="#contact" data-sub="採用について">採用について問い合わせる <span class="arrow">→</span></a>
     </div>

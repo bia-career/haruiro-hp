@@ -44,15 +44,18 @@ body{font-family:var(--ja);color:var(--ink);background:var(--paper);-webkit-font
 
 /* ---------- 背景：色のにじみ（スクロールで少しずつ濃くなる） ---------- */
 .wash{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.wash span{position:absolute;border-radius:50%;filter:blur(80px);background:var(--teal);will-change:opacity,transform}
-.wash .a{width:50vmax;height:50vmax;left:-14vmax;top:-16vmax;opacity:calc(.22 + var(--c)*.12);animation:driftA 26s ease-in-out infinite alternate}
-.wash .b{width:42vmax;height:42vmax;right:-14vmax;top:22vh;opacity:calc(.16 + var(--c)*.14);animation:driftB 32s ease-in-out infinite alternate}
-.wash .d{width:36vmax;height:36vmax;left:24vw;bottom:-20vmax;opacity:calc(.1 + var(--c)*.14);animation:driftC 22s ease-in-out infinite alternate}
-.wash .e{width:26vmax;height:26vmax;left:40vw;top:8vh;background:var(--teal-light);opacity:calc(.35 - var(--c)*.2);animation:driftD 18s ease-in-out infinite alternate}
-@keyframes driftA{to{transform:translate(18vw,14vh) scale(1.15)}}
-@keyframes driftB{to{transform:translate(-22vw,-12vh) scale(.9)}}
-@keyframes driftC{to{transform:translate(-14vw,-18vh) scale(1.2)}}
-@keyframes driftD{0%{transform:translate(-12vw,6vh) scale(.9)}100%{transform:translate(10vw,22vh) scale(1.25)}}
+.wash span{position:absolute;border-radius:50%;filter:blur(70px);background:var(--teal);will-change:transform,border-radius,opacity}
+.wash .a{width:50vmax;height:50vmax;left:-14vmax;top:-16vmax;opacity:calc(.26 + var(--c)*.12);animation:driftA 16s ease-in-out infinite,morph 9s ease-in-out infinite}
+.wash .b{width:42vmax;height:42vmax;right:-14vmax;top:22vh;opacity:calc(.2 + var(--c)*.14);animation:driftB 19s ease-in-out infinite,morph 11s ease-in-out infinite reverse}
+.wash .d{width:36vmax;height:36vmax;left:24vw;bottom:-20vmax;opacity:calc(.14 + var(--c)*.14);animation:driftC 14s ease-in-out infinite,morph 8s ease-in-out infinite}
+.wash .e{width:28vmax;height:28vmax;left:40vw;top:8vh;background:var(--teal-light);opacity:calc(.42 - var(--c)*.2);animation:driftD 12s ease-in-out infinite,breathe 6s ease-in-out infinite}
+/* ゆっくりだけど、見て分かる程度に「もわー」と漂い続ける動き */
+@keyframes driftA{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(16vw,8vh) scale(1.12)}50%{transform:translate(26vw,20vh) scale(.95)}75%{transform:translate(8vw,16vh) scale(1.08)}}
+@keyframes driftB{0%,100%{transform:translate(0,0) scale(1)}30%{transform:translate(-18vw,-10vh) scale(1.15)}60%{transform:translate(-28vw,6vh) scale(.9)}80%{transform:translate(-10vw,10vh) scale(1.05)}}
+@keyframes driftC{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-16vw,-14vh) scale(1.2)}66%{transform:translate(12vw,-22vh) scale(.92)}}
+@keyframes driftD{0%,100%{transform:translate(-12vw,4vh) scale(.9)}35%{transform:translate(8vw,18vh) scale(1.2)}70%{transform:translate(18vw,-4vh) scale(1.05)}}
+@keyframes morph{0%,100%{border-radius:50% 50% 50% 50%/50% 50% 50% 50%}33%{border-radius:62% 38% 55% 45%/45% 58% 42% 55%}66%{border-radius:40% 60% 45% 55%/58% 40% 60% 42%}}
+@keyframes breathe{0%,100%{filter:blur(70px) brightness(1)}50%{filter:blur(60px) brightness(1.06)}}
 
 /* ---------- logo ---------- */
 .logo{position:relative;display:block}

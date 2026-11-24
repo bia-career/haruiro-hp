@@ -157,16 +157,6 @@ nav a.cta:hover{background:var(--teal-dark);box-shadow:0 0 0 5px rgba(85,190,186
 .hero.ready .fade.d1{transition-delay:.25s}.hero.ready .fade.d2{transition-delay:.5s}.hero.ready .fade.d3{transition-delay:.8s}
 .hero .logo.mark .g{transition:background 2.4s ease 1.2s}
 .hero.ready .logo.mark .g{background:var(--teal)}
-/* ---------- 最初の演出：ロゴがドンと出て、ふっと本編へ（タブで初回のみ・約2秒） ---------- */
-.intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:var(--paper);cursor:pointer;
-  animation:introOut .6s cubic-bezier(.4,0,.2,1) 1.4s forwards}
-.intro .logo.full{width:min(560px,72vw);opacity:0;transform:scale(1.14);filter:blur(14px);
-  animation:introIn .65s cubic-bezier(.16,1,.3,1) .1s forwards}
-.intro .logo .g{animation:introTint .6s ease .65s forwards}
-.intro.skip,.intro.skip .logo.full,.intro.skip .logo .g{animation-delay:0s}
-@keyframes introIn{to{opacity:1;transform:none;filter:blur(0)}}
-@keyframes introTint{to{background:var(--teal)}}
-@keyframes introOut{to{opacity:0;visibility:hidden;pointer-events:none}}
 .scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);width:1px;height:56px;background:linear-gradient(var(--gray-300),transparent)}
 
 /* ---------- 由来（スクロールで色づく） ---------- */
@@ -293,7 +283,6 @@ footer .logo .g{background:var(--teal)}
 
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
-  .intro{display:none}
   .wash span{animation:none}
   .fade,.reveal{opacity:1;transform:none}
   .hero h1 .hl{animation:none;filter:none}
@@ -304,16 +293,25 @@ footer .logo .g{background:var(--teal)}
   .panel .copy em{color:var(--teal)}
   .band{display:none}
 }
+
+/* ---------- オープニング：ロゴが「バババ」と打ち出され、ウィーンと左上に収まる ---------- */
+.intro{position:fixed;inset:0;z-index:100;background:var(--paper);cursor:pointer}
+.intro .fly{position:absolute;left:50%;top:50%;width:min(560px,74vw);transform:translate(-50%,-50%);transform-origin:0 0}
+.intro .fly .logo{clip-path:inset(0 100% 0 0)}
+html.intro-on .brand .logo{opacity:0}
 </style>
 </head>
 <body>
-<div class="intro" aria-hidden="true"><span class="logo full"><i class="g"></i><i class="d"></i></span></div>
+<div class="intro" aria-hidden="true"><div class="fly"><span class="logo full"><i class="g"></i><i class="d"></i></span></div></div>
 <script>
-// オープニングはそのタブで最初の1回だけ。2回目以降（再読み込みなど）はすぐ本編へ
-try {
-  if (sessionStorage.getItem('haruiro-intro')) document.querySelector('.intro').remove();
-  else sessionStorage.setItem('haruiro-intro', '1');
-} catch (e) {}
+// オープニングは、そのタブで最初に開いたときの1回だけ。動きを減らす設定の人には出さない
+(function(){
+  var show = true;
+  try { if (sessionStorage.getItem('haruiro-intro')) show = false; else sessionStorage.setItem('haruiro-intro','1'); } catch(e) {}
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) show = false;
+  var el = document.querySelector('.intro');
+  if (!show) { el.remove(); } else { document.documentElement.classList.add('intro-on'); }
+})();
 </script>
 <div class="wash" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="d"></span><span class="e"></span></div>
 
@@ -454,18 +452,44 @@ try {
   // グレー(#e2e5e5) → ティール(#55BEBA)
   const GRAY=[226,229,229], TEAL=[85,190,186];
 
-  // 最初の演出（ロゴ）が消えはじめたら、本編の文字をふわっと出す。クリックやスクロールで飛ばせる
+  // オープニング：①ロゴが左から「バババ」と打ち出される ②少し止まる ③ウィーンと縮んで左上のロゴの位置に収まる
   const intro = document.querySelector('.intro');
-  const introOn = intro && getComputedStyle(intro).display !== 'none';
-  let heroTimer;
-  const showHero = (ms) => { clearTimeout(heroTimer); heroTimer = setTimeout(()=>hero.classList.add('ready'), ms); };
-  if (introOn) {
-    showHero(1450);
-    const skip = () => { if (intro.classList.contains('skip')) return; intro.classList.add('skip'); showHero(250); };
+  if (intro && intro.animate) {
+    const fly = intro.querySelector('.fly');
+    const mark = fly.querySelector('.logo');
+    const target = document.querySelector('.brand .logo');
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      document.documentElement.classList.remove('intro-on');
+      intro.remove();
+      setTimeout(()=>hero.classList.add('ready'), 60);
+    };
+    // ① タイプ（8コマで左から出る）
+    const type = mark.animate([{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)'}],
+      {duration:720, delay:150, easing:'steps(8, end)', fill:'forwards'});
+    type.finished.then(() => {
+      if (done) return;
+      // ③ 左上のロゴの位置・大きさを測って、そこへ飛ぶ
+      const a = fly.getBoundingClientRect(), b = target.getBoundingClientRect();
+      const sc = b.width / a.width;
+      const dx = b.left - a.left, dy = b.top - a.top;
+      const flyAnim = fly.animate([
+        {transform:'translate(-50%,-50%)'},
+        {transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(${sc})`, offset:1}
+      ], {duration:850, delay:380, easing:'cubic-bezier(.75,0,.2,1)', fill:'forwards'});
+      intro.animate([{backgroundColor:'rgba(244,245,245,1)'},{backgroundColor:'rgba(244,245,245,0)'}],
+        {duration:700, delay:520, easing:'ease', fill:'forwards'});
+      flyAnim.finished.then(finish);
+    });
+    // クリック・スクロール・タップ・キーで、すぐ本編へ
+    const skip = () => finish();
     ['click','wheel','touchstart','keydown'].forEach(ev => addEventListener(ev, skip, {once:true, passive:true}));
-    intro.addEventListener('animationend', e => { if (e.animationName === 'introOut') intro.remove(); });
+    setTimeout(finish, 4000); // 念のため
   } else {
-    requestAnimationFrame(()=>showHero(120));
+    if (intro) intro.remove();
+    document.documentElement.classList.remove('intro-on');
+    requestAnimationFrame(()=>setTimeout(()=>hero.classList.add('ready'),120));
   }
 
   const onScroll = () => {
